@@ -1,12 +1,7 @@
-const Vote = () => <div>Vote Page</div>;
-const Results = () => <div>Results Page</div>;
+import PollingSystem from "@/modules/PollingSystem";
 
 export default function PrivateRoutes() {
-  return [
-    { index: true, element: <Dashboard /> },
-    { path: "vote", element: <Vote /> },
-    { path: "results", element: <Results /> },
-  ];
+  return [{ index: true, element: <PollingSystem /> }];
 }
 
 export const Dashboard = () => {
