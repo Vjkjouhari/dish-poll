@@ -107,7 +107,7 @@ const LoginForm = ({ form, onSubmit }: { form: any; onSubmit: any }) => {
                 name="username"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel>Username</FormLabel>
                     <FormControl>
                       <Input placeholder="chef-restaurant" {...field} />
                     </FormControl>
