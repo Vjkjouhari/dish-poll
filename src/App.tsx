@@ -8,14 +8,19 @@ import PublicRoutes from "./routes/PublicRoutes";
 import PrivateRoutes from "./routes/PrivateRoutes";
 
 function App() {
-  const isAuthenticated = true;
-
+  const isAuthenticated = !!localStorage.getItem("auth_token");
   const router = createBrowserRouter([
-    PublicRoutes(),
+    PublicRoutes(isAuthenticated),
     {
       path: "/",
       element: isAuthenticated ? (
-        <PrivateLayout />
+        <PrivateLayout
+          onLogout={() => {
+            localStorage.removeItem("auth_token");
+            localStorage.removeItem("user_name");
+            window.location.reload();
+          }}
+        />
       ) : (
         <Navigate to="/auth/login" replace />
       ),

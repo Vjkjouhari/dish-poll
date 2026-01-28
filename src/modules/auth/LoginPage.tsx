@@ -26,15 +26,29 @@ import {
   loginSchema,
   type LoginFormValues,
 } from "@/schemas/login";
+import { userData } from "@/userData";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
+  const navigate = useNavigate();
   const loginForm = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: initialValue,
   });
 
   const onSubmit = (data: LoginFormValues) => {
-    console.log("Login data:", data);
+    const user = userData.find(
+      (u) => u.username === data.username && u.password === data.password,
+    );
+
+    if (user) {
+      localStorage.setItem("auth_token", user.token);
+      localStorage.setItem("user_name", user.username);
+      navigate("/");
+      window.location.reload();
+    } else {
+      alert("Invalid credentials!");
+    }
   };
 
   return (
@@ -90,14 +104,14 @@ const LoginForm = ({ form, onSubmit }: { form: any; onSubmit: any }) => {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               <FormField
                 control={form.control}
-                name="email"
+                name="username"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input placeholder="chef@restaurant.com" {...field} />
+                      <Input placeholder="chef-restaurant" {...field} />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-red-600" />
                   </FormItem>
                 )}
               />
@@ -131,7 +145,7 @@ const LoginForm = ({ form, onSubmit }: { form: any; onSubmit: any }) => {
                         </button>
                       </div>
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage className="text-red-600" />
                   </FormItem>
                 )}
               />
@@ -166,7 +180,7 @@ const LoginForm = ({ form, onSubmit }: { form: any; onSubmit: any }) => {
                           </button>
                         </div>
                       </FormControl>
-                      <FormMessage />
+                      <FormMessage className="text-red-600" />
                     </FormItem>
                   )}
                 />
