@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import PublicRoutes from "./routes/PublicRoutes";
 import PrivateRoutes from "./routes/PrivateRoutes";
+import { NotFound } from "./modules/NotFound";
 
 function App() {
   const isAuthenticated = !!localStorage.getItem("auth_token");
@@ -33,7 +34,3 @@ function App() {
   return <RouterProvider router={router} />;
 }
 export default App;
-
-function NotFound() {
-  return <div>404 - Not Found</div>;
-}
